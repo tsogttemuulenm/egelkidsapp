@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="mn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Эгэл Тоглоом — 4 үйлдэл</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="mascot" aria-hidden="true">🧠✨</div>
+      <div>
+        <div class="title">Эгэл Тоглоом</div>
+        <div class="subtitle">Суралц • Тогло • Оношил</div>
+      </div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Үйлдэл сонгох">
+      <button class="tab active" data-op="add" role="tab">➕ Нэмэх</button>
+      <button class="tab" data-op="sub" role="tab">➖ Хасах</button>
+      <button class="tab" data-op="mul" role="tab">✖️ Үржих</button>
+      <button class="tab" data-op="div" role="tab">➗ Хуваах</button>
+    </div>
+
+    <div class="mode">
+      <button id="modePlay" class="pill active">🎮 Тоглох</button>
+      <button id="modeLearn" class="pill">📘 Суралцах</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="left">
+      <div class="card game">
+        <div class="cardHead">
+          <div class="row">
+            <div class="badge" id="levelBadge">Level 1</div>
+            <div class="score">
+              ⭐ <span id="stars">0</span>
+              <span class="dot">•</span>
+              🔥 <span id="streak">0</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="hint" id="hintText">Зөв хариулаад ⭐ аваарай!</div>
+            <button id="newBtn" class="btn ghost" title="Шинэ бодлого">🔄</button>
+          </div>
+        </div>
+
+        <div class="problem">
+          <div class="expr" id="expr">12 + 8 = ?</div>
+
+          <div class="answer">
+            <div class="ansBox" id="ansBoxSimple">
+              <label class="lbl">Хариу</label>
+              <input id="ans" inputmode="numeric" autocomplete="off" class="input big" placeholder="…" />
+            </div>
+
+            <div class="ansBox divOnly" id="ansBoxDiv" style="display:none;">
+              <div class="grid2">
+                <div>
+                  <label class="lbl">Ноогдвор (q)</label>
+                  <input id="q" inputmode="numeric" autocomplete="off" class="input big" placeholder="…" />
+                </div>
+                <div>
+                  <label class="lbl">Үлдэгдэл (r)</label>
+                  <input id="r" inputmode="numeric" autocomplete="off" class="input big" placeholder="0" />
+                </div>
+              </div>
+              <label class="check">
+                <input type="checkbox" id="useRemainder" />
+                Үлдэгдэлтэй бодлого тоглох
+              </label>
+            </div>
+
+            <button id="checkBtn" class="btn primary">✅ Шалгах</button>
+          </div>
+
+          <div class="actions">
+            <button id="hintBtn" class="btn">💡 Алхам ахиулах</button>
+            <button id="solveBtn" class="btn">👀 Бүрэн харуулах</button>
+            <button id="traceBtn" class="btn ghost">📝 Тайлбар</button>
+          </div>
+        </div>
+
+        <div class="toast" id="toast" aria-live="polite"></div>
+      </div>
+
+      <div class="card learn" id="learnPanel" style="display:none;">
+        <div class="cardTitle">📘 Суралцах горим</div>
+        <div class="form">
+          <div class="grid2">
+            <div>
+              <label class="lbl">a</label>
+              <input id="a" type="number" class="input" value="32" min="0" max="9999999"/>
+            </div>
+            <div>
+              <label class="lbl">b</label>
+              <input id="b" type="number" class="input" value="56" min="0" max="9999999"/>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label class="lbl">Stage</label>
+              <input id="stage" type="range" min="0" max="3" value="3" />
+              <div class="tiny">0 → 3 хүртэл</div>
+            </div>
+            <div>
+              <label class="lbl">Unit (нүд)</label>
+              <input id="unit" type="range" min="28" max="96" value="56" />
+              <div class="tiny"><span id="unitVal">56</span> px</div>
+            </div>
+          </div>
+
+          <div class="grid2">
+            <label class="check"><input id="showGrid" type="checkbox" checked/> Grid</label>
+            <label class="check"><input id="showMarks" type="checkbox" checked/> Marks</label>
+          </div>
+
+          <div class="grid2 divOnly" style="display:none;">
+            <div>
+              <label class="lbl">Align (div)</label>
+              <select id="align" class="input">
+                <option value="right">right</option>
+                <option value="left">left</option>
+              </select>
+            </div>
+            <div>
+              <label class="lbl">Sub pos (div)</label>
+              <select id="subPos" class="input">
+                <option value="top">top</option>
+                <option value="side">side</option>
+                <option value="none">none</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid2 divOnly" style="display:none;">
+            <label class="check"><input id="showRemainder" type="checkbox" checked/> Remainder</label>
+            <div></div>
+          </div>
+
+          <div class="grid2">
+            <div>
+              <label class="lbl">Color</label>
+              <select id="colorMode" class="input">
+                <option value="1">Өнгөт</option>
+                <option value="0">Хар/цагаан</option>
+              </select>
+            </div>
+            <div class="rowEnd">
+              <button id="renderBtn" class="btn primary">🎨 Зурах</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="right">
+      <div class="card viz">
+        <div class="cardTitle">🧩 Дүрслэл</div>
+        <div class="vizHost" id="svgHost">
+          <div class="placeholder">Энд дүрслэл гарна…</div>
+        </div>
+      </div>
+
+      <div class="card trace" id="tracePanel" style="display:none;">
+        <div class="cardTitle">📝 Алхамчилсан тайлбар</div>
+        <pre id="traceBox" class="traceBox"></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Эгэл ENGINE • Offline-д ажиллана • Stage-тай тоглоом</span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
